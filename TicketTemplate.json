@@ -1,0 +1,12 @@
+{
+    "inicio": "$varChar", // Origen del vuelo
+    "destino": "$varChar", // Destino del vuelo
+    "fechaAbordaje": "$Date", // Fecha del vuelo
+    "horaAbordaje": "$Time", // Hora de abordaje
+    "horaLlegada": "$Time", // Hora de llegada
+    "reservacion": "$varChar", // C�digo de reservaci�n {Generado Auto}
+    "bookingNumber": "$long", // N�mero de ticket {Generado Auto}
+    "vuelo": "$varChar", // N�mero de vuelo {Identificador de vuelo}
+    "asiento": "$varChar", // N�mero de asiento
+    "operador": "$varChar" // Aerol�nea operadora
+}
