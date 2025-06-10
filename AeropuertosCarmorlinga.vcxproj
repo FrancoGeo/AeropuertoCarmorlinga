@@ -78,10 +78,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\mysql-connector-c++9.3.0\lib64;C:\Program Files\MySQL\MySQL Server 8.0\lib;C:\Program Files\MySQL\mysql-connector-c++9.3.0\include;C:\Program Files\MySQL\MySQL Server 8.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>mysqlcppconn.lib;libmysql.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -121,12 +123,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientesDb.cpp" />
     <ClCompile Include="CreateFlight.cpp" />
     <ClCompile Include="ListaDeVuelos.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TicketsDb.cpp" />
+    <ClCompile Include="UsersDb.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientesDb.h" />
     <ClInclude Include="CreateFlight.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -136,6 +143,8 @@
     <ClInclude Include="LoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="TicketsDb.h" />
+    <ClInclude Include="UsersDb.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CreateFlight.resx">

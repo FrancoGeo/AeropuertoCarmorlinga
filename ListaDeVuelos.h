@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CreateFlight.h"
+//#include "VuelosController.h"
 
 namespace AeropuertosCarmorlinga {
 
@@ -139,80 +140,105 @@ namespace AeropuertosCarmorlinga {
 	}
 	private: System::Void flowLayoutVuelos_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
+
+
+		   /*private: void CargarVuelos() {
+			   this->flowLayoutVuelos->Controls->Clear();
+
+			   VuelosController^ vuelosCtrl = gcnew VuelosController();
+			   auto vuelos = vuelosCtrl->ObtenerVuelos();
+
+			   for each (auto vuelo in vuelos) {
+				   System::Windows::Forms::Panel^ vueloPanel = gcnew System::Windows::Forms::Panel();
+				   vueloPanel->Width = 800;
+				   vueloPanel->Height = 120;
+				   vueloPanel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+				   vueloPanel->Margin = System::Windows::Forms::Padding(5);
+
+				   System::Windows::Forms::Label^ inicioLabel = gcnew System::Windows::Forms::Label();
+				   inicioLabel->Text = "Inicio: " + vuelo["inicio"];
+				   inicioLabel->Location = System::Drawing::Point(10, 10);
+				   inicioLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ destinoLabel = gcnew System::Windows::Forms::Label();
+				   destinoLabel->Text = "Destino: " + vuelo["destino"];
+				   destinoLabel->Location = System::Drawing::Point(10, 35);
+				   destinoLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ vueloLabel = gcnew System::Windows::Forms::Label();
+				   vueloLabel->Text = "Vuelo: " + vuelo["vuelo"];
+				   vueloLabel->Location = System::Drawing::Point(10, 60);
+				   vueloLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ fechaLabel = gcnew System::Windows::Forms::Label();
+				   fechaLabel->Text = "Fecha de abordaje: " + vuelo["fechaAbordaje"];
+				   fechaLabel->Location = System::Drawing::Point(200, 10);
+				   fechaLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ horaAbordajeLabel = gcnew System::Windows::Forms::Label();
+				   horaAbordajeLabel->Text = "Hora de abordaje: " + vuelo["horaAbordaje"];
+				   horaAbordajeLabel->Location = System::Drawing::Point(200, 35);
+				   horaAbordajeLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ horaLlegadaLabel = gcnew System::Windows::Forms::Label();
+				   horaLlegadaLabel->Text = "Hora de llegada: " + vuelo["horaLlegada"];
+				   horaLlegadaLabel->Location = System::Drawing::Point(200, 60);
+				   horaLlegadaLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ reservacionLabel = gcnew System::Windows::Forms::Label();
+				   reservacionLabel->Text = "Reservación: " + vuelo["reservacion"];
+				   reservacionLabel->Location = System::Drawing::Point(400, 10);
+				   reservacionLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ bookingNumberLabel = gcnew System::Windows::Forms::Label();
+				   bookingNumberLabel->Text = "No. Ticket: " + vuelo["bookingNumber"];
+				   bookingNumberLabel->Location = System::Drawing::Point(400, 35);
+				   bookingNumberLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ asientoLabel = gcnew System::Windows::Forms::Label();
+				   asientoLabel->Text = "Asiento: " + vuelo["asiento"];
+				   asientoLabel->Location = System::Drawing::Point(400, 60);
+				   asientoLabel->AutoSize = true;
+
+				   System::Windows::Forms::Label^ operadorLabel = gcnew System::Windows::Forms::Label();
+				   operadorLabel->Text = "Operador: " + vuelo["operador"];
+				   operadorLabel->Location = System::Drawing::Point(600, 10);
+				   operadorLabel->AutoSize = true;
+
+				   System::Windows::Forms::Button^ pasajerosButton = gcnew System::Windows::Forms::Button();
+				   pasajerosButton->Text = "Ver pasajeros";
+				   pasajerosButton->Location = System::Drawing::Point(650, 25);
+				   pasajerosButton->Width = 120;
+				   pasajerosButton->Height = 30;
+
+				   pasajerosButton->Tag = vuelo;
+
+				   vueloPanel->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
+				   for each (System::Windows::Forms::Control ^ ctrl in gcnew cli::array<System::Windows::Forms::Control^> { inicioLabel, destinoLabel, vueloLabel, fechaLabel, horaAbordajeLabel, horaLlegadaLabel, reservacionLabel, bookingNumberLabel, asientoLabel, operadorLabel, pasajerosButton }) {
+					   ctrl->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
+				   }
+				   pasajerosButton->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVerPasajerosClick);
+
+				   vueloPanel->Controls->Add(inicioLabel);
+				   vueloPanel->Controls->Add(destinoLabel);
+				   vueloPanel->Controls->Add(vueloLabel);
+				   vueloPanel->Controls->Add(fechaLabel);
+				   vueloPanel->Controls->Add(horaAbordajeLabel);
+				   vueloPanel->Controls->Add(horaLlegadaLabel);
+				   vueloPanel->Controls->Add(reservacionLabel);
+				   vueloPanel->Controls->Add(bookingNumberLabel);
+				   vueloPanel->Controls->Add(asientoLabel);
+				   vueloPanel->Controls->Add(operadorLabel);
+				   vueloPanel->Controls->Add(pasajerosButton);
+
+				   this->flowLayoutVuelos->Controls->Add(vueloPanel);
+			   }
+		   }*/
+
+
+
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Panel^ vueloPanel = gcnew Panel();
-		vueloPanel->Width = 800;
-		vueloPanel->Height = 120;
-		vueloPanel->BorderStyle = BorderStyle::FixedSingle;
-		vueloPanel->Margin = System::Windows::Forms::Padding(5);
-
-		Label^ inicioLabel = gcnew Label();
-		inicioLabel->Text = "Inicio: {}";
-		inicioLabel->Location = Point(10, 10);
-		inicioLabel->AutoSize = true;
-
-		Label^ destinoLabel = gcnew Label();
-		destinoLabel->Text = "Destino: {}";
-		destinoLabel->Location = Point(10, 35);
-		destinoLabel->AutoSize = true;
-
-		Label^ vueloLabel = gcnew Label();
-		vueloLabel->Text = "Vuelo: {IdVuelo}";
-		vueloLabel->Location = Point(10, 60);
-		vueloLabel->AutoSize = true;
-
-		Label^ fechaLabel = gcnew Label();
-		fechaLabel->Text = "Fecha de abordaje: {}";
-		fechaLabel->Location = Point(200, 10);
-		fechaLabel->AutoSize = true;
-
-		Label^ horaAbordajeLabel = gcnew Label();
-		horaAbordajeLabel->Text = "Hora de abordaje: {}";
-		horaAbordajeLabel->Location = Point(200, 35);
-		horaAbordajeLabel->AutoSize = true;
-
-		Label^ horaLlegadaLabel = gcnew Label();
-		horaLlegadaLabel->Text = "Hora de llegada: {}";
-		horaLlegadaLabel->Location = Point(200, 60);
-		horaLlegadaLabel->AutoSize = true;
-
-		Label^ operadorLabel = gcnew Label();
-		operadorLabel->Text = "Operador: {}";
-		operadorLabel->Location = Point(400, 10);
-		operadorLabel->AutoSize = true;
-
-		Button^ pasajerosButton = gcnew Button();
-		pasajerosButton->Text = "Ver pasajeros";
-		pasajerosButton->Location = Point(650, 25);
-		pasajerosButton->Width = 120;
-		pasajerosButton->Height = 30;
-
-		array<Object^>^ flightInfo = gcnew array<Object^>{
-			inicioLabel, destinoLabel, vueloLabel, fechaLabel,
-			horaAbordajeLabel, horaLlegadaLabel, operadorLabel
-		};
-		pasajerosButton->Tag = flightInfo;
-		pasajerosButton->Click += gcnew System::EventHandler(
-			this, &ListaDeVuelos::OnVerPasajerosClick
-		);
-
-		// Evento para seleccionar el panel
-		vueloPanel->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
-		// También para los controles hijos
-		for each(Control ^ ctrl in gcnew cli::array<Control^> { inicioLabel, destinoLabel, vueloLabel, fechaLabel, horaAbordajeLabel, horaLlegadaLabel, operadorLabel, pasajerosButton }) {
-			ctrl->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
-		}
-
-		vueloPanel->Controls->Add(inicioLabel);
-		vueloPanel->Controls->Add(destinoLabel);
-		vueloPanel->Controls->Add(vueloLabel);
-		vueloPanel->Controls->Add(fechaLabel);
-		vueloPanel->Controls->Add(horaAbordajeLabel);
-		vueloPanel->Controls->Add(horaLlegadaLabel);
-		vueloPanel->Controls->Add(operadorLabel);
-		vueloPanel->Controls->Add(pasajerosButton);
-
-		this->flowLayoutVuelos->Controls->Add(vueloPanel);
+		//CargarVuelos();
 	}
 
 	private: System::Void OnVueloPanelClick(System::Object^ sender, System::EventArgs^ e) {
@@ -278,9 +304,9 @@ namespace AeropuertosCarmorlinga {
 
 					array<String^>^ pasajeroInfo = gcnew array<String^>{
 						nombres[i], asientos[i], reservaciones[i], tickets[i],
-						inicioLabel->Text, destinoLabel->Text, vueloLabel->Text,
-						fechaLabel->Text, horaAbordajeLabel->Text, horaLlegadaLabel->Text,
-						operadorLabel->Text
+							inicioLabel->Text, destinoLabel->Text, vueloLabel->Text,
+							fechaLabel->Text, horaAbordajeLabel->Text, horaLlegadaLabel->Text,
+							operadorLabel->Text
 					};
 					item->Tag = pasajeroInfo;
 

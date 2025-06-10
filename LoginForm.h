@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ListaDeVuelos.h"
-
+#include "UsersDb.h"
 
 namespace AeropuertosCarmorlinga {
 
@@ -139,6 +139,7 @@ namespace AeropuertosCarmorlinga {
 			this->registerButton->TabIndex = 6;
 			this->registerButton->Text = L"Registrarse";
 			this->registerButton->UseVisualStyleBackColor = true;
+			this->registerButton->Click += gcnew System::EventHandler(this, &LoginForm::registerButton_Click);
 			// 
 			// LoginForm
 			// 
@@ -176,8 +177,15 @@ namespace AeropuertosCarmorlinga {
 			return;
 		}
 
-		// Oculta el formulario de login
-		this->Hide();
+		// add your authentication logic here
+		UsersDb^ usersDb = gcnew UsersDb();
+		if (!usersDb->AuthenticateUser(username, password)) {
+			MessageBox::Show(
+				"Credenciales incorrectas. Intente de nuevo.",
+				"Error de autenticación",
+				MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 
 		// Crea y muestra la ventana de ListaDeVuelos
 		ListaDeVuelos^ vuelosForm = gcnew ListaDeVuelos();
@@ -190,5 +198,30 @@ namespace AeropuertosCarmorlinga {
 	}
 	private: System::Void inputPassword_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-};
+	private: System::Void registerButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		if (inputUserName->Text->Length == 0 || passwordInput->Text->Length == 0) {
+			MessageBox::Show(
+				"Por favor, complete todos los campos.",
+				"Error",
+				MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		UsersDb^ usersDb = gcnew UsersDb();
+
+		if (usersDb->InsertUser(passwordInput->Text, inputUserName->Text)) {
+			MessageBox::Show(
+				"Usuario registrado exitosamente.",
+				"Registro exitoso",
+				MessageBoxButtons::OK, MessageBoxIcon::Information);
+		}
+		else {
+			MessageBox::Show(
+				"Error al registrar el usuario. Intente de nuevo.",
+				"Error de registro",
+				MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+
+	}
+	};
 }

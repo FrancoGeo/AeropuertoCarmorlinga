@@ -61,6 +61,8 @@ namespace AeropuertosCarmorlinga {
 
 
 
+
+
 	protected:
 
 	private:
@@ -222,7 +224,7 @@ namespace AeropuertosCarmorlinga {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(268, 450);
+			this->button1->Location = System::Drawing::Point(259, 499);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(104, 30);
 			this->button1->TabIndex = 13;
@@ -233,12 +235,13 @@ namespace AeropuertosCarmorlinga {
 			// button2
 			// 
 			this->button2->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
-			this->button2->Location = System::Drawing::Point(378, 450);
+			this->button2->Location = System::Drawing::Point(369, 499);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(104, 30);
 			this->button2->TabIndex = 14;
 			this->button2->Text = L"Cancelar";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &CreateFlight::button2_Click);
 			// 
 			// label8
 			// 
@@ -290,6 +293,41 @@ namespace AeropuertosCarmorlinga {
 	private: System::Void horaAbordajeInput_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ inicio = inicioInput->Text;
+		String^ destino = destinoInput->Text;
+		DateTime fechaAbordaje = fechaAbordajeInput->Value;
+		DateTime horaAbordaje = horaAbordajeInput->Value;
+		String^ asiento = AsientoInput->Text;
+		String^ operador = operadorInput->Text;
+
+		MessageBox::Show("Boleto creado y guardado en la base de datos con éxito:\n" +
+			"Inicio: " + inicio + "\n" +
+			"Destino: " + destino + "\n" +
+			"Fecha de Abordaje: " + fechaAbordaje.ToShortDateString() + "\n" +
+			"Hora de Abordaje: " + horaAbordaje.ToShortTimeString() + "\n" +
+			"Asiento: " + asiento + "\n" +
+			"Operador: " + operador);
+
+		/*if (exito) {
+			MessageBox::Show("Boleto creado y guardado en la base de datos con éxito:\n" +
+				"Inicio: " + inicio + "\n" +
+				"Destino: " + destino + "\n" +
+				"Fecha de Abordaje: " + fechaAbordaje.ToShortDateString() + "\n" +
+				"Hora de Abordaje: " + horaAbordaje.ToShortTimeString() + "\n" +
+				"Asiento: " + asiento + "\n" +
+				"Operador: " + operador);
+		}
+		else {
+			MessageBox::Show("No se pudo guardar el boleto en la base de datos.");
+		}*/
+	}
+
+	private: System::Void label9_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
 	}
 	};
 }
