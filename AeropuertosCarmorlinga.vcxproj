@@ -123,17 +123,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientesDb.cpp" />
     <ClCompile Include="CreateFlight.cpp" />
     <ClCompile Include="ListaDeVuelos.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="newClient.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="TicketsDb.cpp" />
     <ClCompile Include="UsersDb.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientesDb.h" />
     <ClInclude Include="CreateFlight.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -141,6 +140,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="LoginForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="newClient.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="TicketsDb.h" />
@@ -155,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newClient.resx">
+      <DependentUpon>newClient.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

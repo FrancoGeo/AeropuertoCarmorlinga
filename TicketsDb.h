@@ -25,7 +25,7 @@ public:
 	~TicketsDb();
 
 	List<Ticket^>^ MostrarTodosLosTickets();
-
+	int GetPrimaryId();
 
 	bool CrearTicket(
 		String^ inicio,

@@ -1,4 +1,4 @@
-#include "TicketsDb.h"
+ï»¿#include "TicketsDb.h"
 
 #include <mysql.h>
 #include <string>
@@ -7,16 +7,12 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
-TicketsDb::TicketsDb() {
-	// Constructor vacío
-}
+TicketsDb::TicketsDb() {}
 
-TicketsDb::~TicketsDb() {
-	// Destructor vacío
-}
+TicketsDb::~TicketsDb() {}
 
 List<Ticket^>^ TicketsDb::MostrarTodosLosTickets() {
-	List<Ticket^>^ tickets = gcnew List<Ticket^>();
+	auto tickets = gcnew List<Ticket^>();
 
 	MYSQL* conn = mysql_init(nullptr);
 	if (!conn) {
@@ -24,7 +20,7 @@ List<Ticket^>^ TicketsDb::MostrarTodosLosTickets() {
 		return tickets;
 	}
 	if (!mysql_real_connect(conn, "localhost", "root", "root123", "tickets", 3306, nullptr, 0)) {
-		std::cout << "Error de conexión: " << mysql_error(conn) << std::endl;
+		std::cout << "Error de conexiÃ³n: " << mysql_error(conn) << std::endl;
 		mysql_close(conn);
 		return tickets;
 	}
@@ -103,7 +99,7 @@ bool TicketsDb::CrearTicket(
 		return false;
 	}
 	if (!mysql_real_connect(conn, "localhost", "root", "root123", "tickets", 3306, nullptr, 0)) {
-		std::cout << "Error de conexión: " << mysql_error(conn) << std::endl;
+		std::cout << "Error de conexiÃ³n: " << mysql_error(conn) << std::endl;
 		mysql_close(conn);
 		return false;
 	}
@@ -183,7 +179,7 @@ bool TicketsDb::UpdateTicket(
 		return false;
 	}
 	if (!mysql_real_connect(conn, "localhost", "root", "root123", "tickets", 3306, nullptr, 0)) {
-		std::cout << "Error de conexión: " << mysql_error(conn) << std::endl;
+		std::cout << "Error de conexiÃ³n: " << mysql_error(conn) << std::endl;
 		mysql_close(conn);
 		return false;
 	}
@@ -230,16 +226,34 @@ bool TicketsDb::DeleteTicket(int bookingNumber) {
 		std::cout << "Error al inicializar MySQL." << std::endl;
 		return false;
 	}
+
 	if (!mysql_real_connect(conn, "localhost", "root", "root123", "tickets", 3306, nullptr, 0)) {
-		std::cout << "Error de conexión: " << mysql_error(conn) << std::endl;
+		std::cout << "Error de conexion: " << mysql_error(conn) << std::endl;
+		mysql_close(conn); // âœ… Cerrar si falla la conexiÃ³n
+		return false;
+	}
+
+	std::string query = "DELETE FROM tickets WHERE bookingNumber = " + std::to_string(bookingNumber);
+
+	if (mysql_query(conn, query.c_str()) != 0) {
+		std::cout << "Error al ejecutar DELETE: " << mysql_error(conn) << std::endl;
+		mysql_close(conn); // âœ… Asegurarse de cerrar siempre
+		return false;
+	}
+
+	if (mysql_affected_rows(conn) == 0) {
+		std::cout << "No se encontro un ticket con ese bookingNumber." << std::endl;
 		mysql_close(conn);
 		return false;
 	}
-	std::string query = "DELETE FROM tickets WHERE bookingNumber=" + std::to_string(bookingNumber);
-	bool success = (mysql_query(conn, query.c_str()) == 0);
-	if (!success) {
-		std::cout << "Error al eliminar el ticket: " << mysql_error(conn) << std::endl;
-	}
+
 	mysql_close(conn);
-	return success;
+	return true;
+}
+
+
+
+
+int TicketsDb::GetPrimaryId() {
+	return 0;
 }

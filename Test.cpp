@@ -1,20 +1,24 @@
-#include <mysql.h>
-#include <iostream>
-#include <string>
-
-#include "TicketsDb.h"
-
-
-using namespace System;
-
-int main(void) {
-	TicketsDb^ ticketsDb = gcnew TicketsDb();
-
-	auto tickets = ticketsDb->MostrarTodosLosTickets();
-	for each (Ticket ^ t in tickets) {
-		Console::WriteLine("Booking: {0} - {1} -> {2}", t->bookingNumber, t->inicio, t->destino);
-	}
-
-	system("pause");
-	return 0;
-}
+//#include <mysql.h>
+//#include <iostream>
+//#include <string>
+//
+//#include "TicketsDb.h"
+//
+//
+//using namespace System;
+//
+//int main(void) {
+//
+//	bool resultado = true;
+//
+//	if (resultado) {
+//		std::cout << "El ticket fue eliminado correctamente." << std::endl;
+//	}
+//	else {
+//		std::cout << "No se pudo eliminar el ticket." << std::endl;
+//	}
+//
+//	system("pause");
+//	return 0;
+//}
+//
