@@ -17,6 +17,7 @@ public:
 	String^ vuelo;
 	String^ asiento;
 	String^ operador;
+	String^ clienteName;
 };
 
 public ref class TicketsDb {
@@ -25,7 +26,6 @@ public:
 	~TicketsDb();
 
 	List<Ticket^>^ MostrarTodosLosTickets();
-	int GetPrimaryId();
 
 	bool CrearTicket(
 		String^ inicio,
@@ -37,7 +37,8 @@ public:
 		int bookingNumber,
 		String^ vuelo,
 		String^ asiento,
-		String^ operador
+		String^ operador,
+		String^ clienteName
 	);
 
 	bool UpdateTicket(
@@ -51,7 +52,8 @@ public:
 		int bookingNumber,
 		String^ vuelo,
 		String^ asiento,
-		String^ operador
+		String^ operador,
+		String^ clienteName
 	);
 
 	bool DeleteTicket(int bookingNumber);

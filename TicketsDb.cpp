@@ -52,6 +52,7 @@ List<Ticket^>^ TicketsDb::MostrarTodosLosTickets() {
 		ticket->vuelo = gcnew System::String(row[7]);
 		ticket->asiento = gcnew System::String(row[8]);
 		ticket->operador = gcnew System::String(row[9]);
+		ticket->clienteName = gcnew System::String(row[10]);
 		tickets->Add(ticket);
 	}
 
@@ -70,7 +71,8 @@ bool TicketsDb::CrearTicket(
 	int bookingNumber,
 	String^ vuelo,
 	String^ asiento,
-	String^ operador
+	String^ operador,
+	String^ clienteName
 ) {
 	// Convertir System::String^ a std::string
 	IntPtr inicioPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(inicio);
@@ -82,6 +84,7 @@ bool TicketsDb::CrearTicket(
 	IntPtr vueloPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(vuelo);
 	IntPtr asientoPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(asiento);
 	IntPtr operadorPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(operador);
+	IntPtr clienteNamePtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(clienteName);
 
 	std::string inicioStr = static_cast<char*>(inicioPtr.ToPointer());
 	std::string destinoStr = static_cast<char*>(destinoPtr.ToPointer());
@@ -92,6 +95,7 @@ bool TicketsDb::CrearTicket(
 	std::string vueloStr = static_cast<char*>(vueloPtr.ToPointer());
 	std::string asientoStr = static_cast<char*>(asientoPtr.ToPointer());
 	std::string operadorStr = static_cast<char*>(operadorPtr.ToPointer());
+	std::string clienteNameStr = static_cast<char*>(clienteNamePtr.ToPointer());
 
 	MYSQL* conn = mysql_init(nullptr);
 	if (!conn) {
@@ -105,7 +109,7 @@ bool TicketsDb::CrearTicket(
 	}
 
 	std::string query =
-		"INSERT INTO tickets (inicio, destino, fechaAbordaje, horaAbordaje, horaLlegada, reservacion, bookingNumber, vuelo, asiento, operador) VALUES ('" +
+		"INSERT INTO tickets (inicio, destino, fechaAbordaje, horaAbordaje, horaLlegada, reservacion, bookingNumber, vuelo, asiento, operador, cliente) VALUES ('" +
 		inicioStr + "', '" +
 		destinoStr + "', '" +
 		fechaStr + "', '" +
@@ -115,7 +119,9 @@ bool TicketsDb::CrearTicket(
 		std::to_string(bookingNumber) + ", '" +
 		vueloStr + "', '" +
 		asientoStr + "', '" +
-		operadorStr + "')";
+		operadorStr + "', '" +
+		clienteNameStr + "')";
+
 
 	bool success = (mysql_query(conn, query.c_str()) == 0);
 
@@ -135,12 +141,13 @@ bool TicketsDb::CrearTicket(
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(vueloPtr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(asientoPtr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(operadorPtr);
+	System::Runtime::InteropServices::Marshal::FreeHGlobal(clienteNamePtr);
 
 	return success;
 }
 
 bool TicketsDb::UpdateTicket(
-	int bookingNumber,
+	int bookingNumberIdentificador,
 	String^ inicio,
 	String^ destino,
 	String^ fechaAbordaje,
@@ -150,7 +157,8 @@ bool TicketsDb::UpdateTicket(
 	int newBookingNumber,
 	String^ vuelo,
 	String^ asiento,
-	String^ operador
+	String^ operador,
+	String^ clienteName
 ) {
 	// Convertir System::String^ a std::string
 	IntPtr inicioPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(inicio);
@@ -162,6 +170,7 @@ bool TicketsDb::UpdateTicket(
 	IntPtr vueloPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(vuelo);
 	IntPtr asientoPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(asiento);
 	IntPtr operadorPtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(operador);
+	IntPtr clienteNamePtr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(clienteName);
 
 	std::string inicioStr = static_cast<char*>(inicioPtr.ToPointer());
 	std::string destinoStr = static_cast<char*>(destinoPtr.ToPointer());
@@ -172,6 +181,7 @@ bool TicketsDb::UpdateTicket(
 	std::string vueloStr = static_cast<char*>(vueloPtr.ToPointer());
 	std::string asientoStr = static_cast<char*>(asientoPtr.ToPointer());
 	std::string operadorStr = static_cast<char*>(operadorPtr.ToPointer());
+	std::string clienteNameStr = static_cast<char*>(clienteNamePtr.ToPointer());
 
 	MYSQL* conn = mysql_init(nullptr);
 	if (!conn) {
@@ -196,7 +206,8 @@ bool TicketsDb::UpdateTicket(
 		", vuelo='" + vueloStr +
 		"', asiento='" + asientoStr +
 		"', operador='" + operadorStr +
-		"' WHERE bookingNumber=" + std::to_string(bookingNumber);
+		"', cliente='" + clienteNameStr +
+		"' WHERE bookingNumber=" + std::to_string(bookingNumberIdentificador);
 
 	bool success = (mysql_query(conn, query.c_str()) == 0);
 
@@ -216,6 +227,7 @@ bool TicketsDb::UpdateTicket(
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(vueloPtr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(asientoPtr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(operadorPtr);
+	System::Runtime::InteropServices::Marshal::FreeHGlobal(clienteNamePtr);
 
 	return success;
 }
@@ -249,11 +261,4 @@ bool TicketsDb::DeleteTicket(int bookingNumber) {
 
 	mysql_close(conn);
 	return true;
-}
-
-
-
-
-int TicketsDb::GetPrimaryId() {
-	return 0;
 }

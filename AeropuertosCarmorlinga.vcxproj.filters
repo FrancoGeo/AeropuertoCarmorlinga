@@ -36,7 +36,7 @@
     <ClCompile Include="TicketsDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="newClient.cpp">
+    <ClCompile Include="ModificarVuelo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="TicketsDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newClient.h">
+    <ClInclude Include="ModificarVuelo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

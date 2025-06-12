@@ -108,7 +108,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>STATIC_CONCPP;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\mysql-connector-c++9.3.0\lib64;C:\Program Files\MySQL\MySQL Server 8.0\lib;C:\Program Files\MySQL\mysql-connector-c++9.3.0\include;C:\Program Files\MySQL\MySQL Server 8.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Connector C++ 9.3\lib64;C:\Program Files\MySQL\MySQL Server 8.0\lib;C:\Program Files\MySQL\mysql-connector-c++9.3.0\include;C:\Program Files\MySQL\MySQL Server 8.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>mysqlcppconn.lib;libmysql.lib</AdditionalDependencies>
@@ -127,7 +127,7 @@
     <ClCompile Include="ListaDeVuelos.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="newClient.cpp" />
+    <ClCompile Include="ModificarVuelo.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="TicketsDb.cpp" />
     <ClCompile Include="UsersDb.cpp" />
@@ -142,7 +142,7 @@
     <ClInclude Include="LoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="newClient.h">
+    <ClInclude Include="ModificarVuelo.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="TicketsDb.h" />
@@ -158,8 +158,8 @@
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="newClient.resx">
-      <DependentUpon>newClient.h</DependentUpon>
+    <EmbeddedResource Include="ModificarVuelo.resx">
+      <DependentUpon>ModificarVuelo.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -72,6 +72,10 @@ namespace AeropuertosCarmorlinga {
 	private: System::Windows::Forms::TextBox^ VuelosInput;
 
 	private: System::Windows::Forms::Label^ Vuelo;
+	private: System::Windows::Forms::TextBox^ clienteNameInput;
+
+	private: System::Windows::Forms::Label^ Client;
+
 
 
 
@@ -119,6 +123,8 @@ namespace AeropuertosCarmorlinga {
 			this->ReservacionInput = (gcnew System::Windows::Forms::Label());
 			this->VuelosInput = (gcnew System::Windows::Forms::TextBox());
 			this->Vuelo = (gcnew System::Windows::Forms::Label());
+			this->clienteNameInput = (gcnew System::Windows::Forms::TextBox());
+			this->Client = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -195,7 +201,7 @@ namespace AeropuertosCarmorlinga {
 			this->label5->AutoSize = true;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label5->Location = System::Drawing::Point(190, 256);
+			this->label5->Location = System::Drawing::Point(190, 259);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(132, 20);
 			this->label5->TabIndex = 7;
@@ -204,7 +210,7 @@ namespace AeropuertosCarmorlinga {
 			// horaAbordajeInput
 			// 
 			this->horaAbordajeInput->Format = System::Windows::Forms::DateTimePickerFormat::Time;
-			this->horaAbordajeInput->Location = System::Drawing::Point(194, 279);
+			this->horaAbordajeInput->Location = System::Drawing::Point(194, 282);
 			this->horaAbordajeInput->Name = L"horaAbordajeInput";
 			this->horaAbordajeInput->ShowUpDown = true;
 			this->horaAbordajeInput->Size = System::Drawing::Size(169, 20);
@@ -285,6 +291,7 @@ namespace AeropuertosCarmorlinga {
 			this->bookinNumber->Name = L"bookinNumber";
 			this->bookinNumber->Size = System::Drawing::Size(169, 20);
 			this->bookinNumber->TabIndex = 16;
+			this->bookinNumber->TextChanged += gcnew System::EventHandler(this, &CreateFlight::bookinNumber_TextChanged);
 			// 
 			// bookingNumber
 			// 
@@ -353,11 +360,32 @@ namespace AeropuertosCarmorlinga {
 			this->Vuelo->TabIndex = 21;
 			this->Vuelo->Text = L"Vuelo";
 			// 
+			// clienteNameInput
+			// 
+			this->clienteNameInput->Location = System::Drawing::Point(369, 334);
+			this->clienteNameInput->Name = L"clienteNameInput";
+			this->clienteNameInput->Size = System::Drawing::Size(169, 20);
+			this->clienteNameInput->TabIndex = 24;
+			this->clienteNameInput->TextChanged += gcnew System::EventHandler(this, &CreateFlight::clienteNameInput_TextChanged);
+			// 
+			// Client
+			// 
+			this->Client->AutoSize = true;
+			this->Client->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Client->Location = System::Drawing::Point(365, 311);
+			this->Client->Name = L"Client";
+			this->Client->Size = System::Drawing::Size(140, 20);
+			this->Client->TabIndex = 23;
+			this->Client->Text = L"Nombre de Cliente";
+			// 
 			// CreateFlight
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(797, 627);
+			this->Controls->Add(this->clienteNameInput);
+			this->Controls->Add(this->Client);
 			this->Controls->Add(this->VuelosInput);
 			this->Controls->Add(this->Vuelo);
 			this->Controls->Add(this->reseInput);
@@ -409,6 +437,7 @@ namespace AeropuertosCarmorlinga {
 		String^ vuelo = VuelosInput->Text;
 		String^ asiento = AsientoInput->Text;
 		String^ operador = operadorInput->Text;
+		String^ clienteName = clienteNameInput->Text;
 
 		int bookingNumber;
 		if (!System::Int32::TryParse(bookinNumber->Text, bookingNumber)) {
@@ -434,7 +463,8 @@ namespace AeropuertosCarmorlinga {
 				bookingNumber,
 				vuelo,
 				asiento,
-				operador
+				operador,
+				clienteName
 			);
 
 			if (exito) {
@@ -458,6 +488,10 @@ namespace AeropuertosCarmorlinga {
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
+	}
+	private: System::Void clienteNameInput_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void bookinNumber_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	};
 }

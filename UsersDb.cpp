@@ -29,7 +29,7 @@ bool UsersDb::AuthenticateUser(System::String^ email, System::String^ password) 
 	}
 
 	// Consulta SQL para autenticar usuario
-	std::string query = "SELECT COUNT(*) FROM users WHERE email='" + emailStr + "' AND password='" + passStr + "'";
+	std::string query = "SELECT COUNT(*) FROM usuarios WHERE email='" + emailStr + "' AND password='" + passStr + "'";
 	if (mysql_query(conn, query.c_str())) {
 		mysql_close(conn);
 		return false;
@@ -67,7 +67,7 @@ bool UsersDb::InsertUser(System::String^ password, System::String^ email) {
 		return false;
 	}
 
-	std::string query = "INSERT INTO users (email, password) VALUES ('" + emailStr + "', '" + passStr + "')";
+	std::string query = "INSERT INTO usuarios (email, password) VALUES ('" + emailStr + "', '" + passStr + "')";
 	bool success = (mysql_query(conn, query.c_str()) == 0);
 
 	mysql_close(conn);
