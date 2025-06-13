@@ -42,17 +42,17 @@ List<Ticket^>^ TicketsDb::MostrarTodosLosTickets() {
 	MYSQL_ROW row;
 	while ((row = mysql_fetch_row(res))) {
 		Ticket^ ticket = gcnew Ticket();
-		ticket->inicio = gcnew System::String(row[0]);
-		ticket->destino = gcnew System::String(row[1]);
-		ticket->fechaAbordaje = gcnew System::String(row[2]);
-		ticket->horaAbordaje = gcnew System::String(row[3]);
-		ticket->horaLlegada = gcnew System::String(row[4]);
-		ticket->reservacion = gcnew System::String(row[5]);
-		ticket->bookingNumber = row[6] ? atoi(row[6]) : 0;
-		ticket->vuelo = gcnew System::String(row[7]);
-		ticket->asiento = gcnew System::String(row[8]);
-		ticket->operador = gcnew System::String(row[9]);
-		ticket->clienteName = gcnew System::String(row[10]);
+		ticket->inicio = gcnew System::String(row[1]);
+		ticket->destino = gcnew System::String(row[2]);
+		ticket->fechaAbordaje = gcnew System::String(row[3]);
+		ticket->horaAbordaje = gcnew System::String(row[4]);
+		ticket->horaLlegada = gcnew System::String(row[5]);
+		ticket->reservacion = gcnew System::String(row[6]);
+		ticket->bookingNumber = System::Convert::ToInt32(gcnew System::String(row[7]));
+		ticket->vuelo = gcnew System::String(row[8]);
+		ticket->asiento = gcnew System::String(row[9]);
+		ticket->operador = gcnew System::String(row[10]);
+		ticket->clienteName = gcnew System::String(row[11]);
 		tickets->Add(ticket);
 	}
 
@@ -241,7 +241,7 @@ bool TicketsDb::DeleteTicket(int bookingNumber) {
 
 	if (!mysql_real_connect(conn, "localhost", "root", "root123", "tickets", 3306, nullptr, 0)) {
 		std::cout << "Error de conexion: " << mysql_error(conn) << std::endl;
-		mysql_close(conn); // ✅ Cerrar si falla la conexión
+		mysql_close(conn);
 		return false;
 	}
 
@@ -249,7 +249,7 @@ bool TicketsDb::DeleteTicket(int bookingNumber) {
 
 	if (mysql_query(conn, query.c_str()) != 0) {
 		std::cout << "Error al ejecutar DELETE: " << mysql_error(conn) << std::endl;
-		mysql_close(conn); // ✅ Asegurarse de cerrar siempre
+		mysql_close(conn);
 		return false;
 	}
 
@@ -262,3 +262,4 @@ bool TicketsDb::DeleteTicket(int bookingNumber) {
 	mysql_close(conn);
 	return true;
 }
+

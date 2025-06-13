@@ -154,7 +154,7 @@ namespace AeropuertosCarmorlinga {
 					"Confirmar cancelación", MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == System::Windows::Forms::DialogResult::Yes) {
 
 					TicketsDb^ db = gcnew TicketsDb();
-					bool eliminado = db->DeleteTicket(System::Convert::ToInt32(ticket->vuelo));
+					bool eliminado = db->DeleteTicket(System::Convert::ToInt32(ticket->bookingNumber));
 
 					if (eliminado) {
 						MessageBox::Show("Vuelo cancelado correctamente.", "Cancelación", MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -168,16 +168,6 @@ namespace AeropuertosCarmorlinga {
 		}
 	}
 
-	private: String^ QuitarAcentos(String^ texto) {
-		array<wchar_t>^ acentos = { L'á', L'é', L'í', L'ó', L'ú', L'Á', L'É', L'Í', L'Ó', L'Ú' };
-		array<wchar_t>^ sinAcentos = { L'a', L'e', L'i', L'o', L'u', L'A', L'E', L'I', L'O', L'U' };
-		for (int i = 0; i < acentos->Length; i++) {
-			texto = texto->Replace(acentos[i], sinAcentos[i]);
-		}
-		return texto;
-	}
-
-
 	private: System::Void OnImprimirBoletoClick(System::Object^ sender, System::EventArgs^ e) {
 		Button^ btn = dynamic_cast<Button^>(sender);
 		if (btn != nullptr && btn->Tag != nullptr) {
@@ -185,82 +175,63 @@ namespace AeropuertosCarmorlinga {
 			if (ticket != nullptr) {
 				Form^ boardingPassForm = gcnew Form();
 				boardingPassForm->Text = "Pase de abordar";
-				boardingPassForm->Size = Drawing::Size(800, 370);
 				boardingPassForm->StartPosition = FormStartPosition::CenterParent;
 				boardingPassForm->MaximizeBox = false;
+				boardingPassForm->AutoSize = true;
 
 				Panel^ mainPanel = gcnew Panel();
 				mainPanel->Dock = DockStyle::Fill;
 				mainPanel->BackColor = Color::White;
+				mainPanel->AutoSize = true;
 
-				// Titulo
-				Label^ title = gcnew Label();
-				title->Text = "PASE DE ABORDAR";
-				title->Font = gcnew Drawing::Font("Segoe UI", 18, FontStyle::Bold);
-				title->ForeColor = Color::FromArgb(0, 153, 255);
-				title->Location = Drawing::Point(20, 10);
-				title->AutoSize = true;
-
-				// Nombre del pasajero
-				Label^ name = gcnew Label();
-				name->Text = ticket->clienteName->ToUpper();
-				name->Font = gcnew Drawing::Font("Segoe UI", 14, FontStyle::Regular);
-				name->Location = Drawing::Point(20, 60);
-				name->AutoSize = true;
-
-				// Ruta
-				Label^ route = gcnew Label();
-				route->Text = ticket->inicio->ToUpper() + "   ->   " + ticket->destino->ToUpper();
-				route->Font = gcnew Drawing::Font("Segoe UI", 12, FontStyle::Bold);
-				route->Location = Drawing::Point(20, 90);
-				route->AutoSize = true;
-
-				// Codigos de aeropuerto
-				String^ codeInicio = ticket->inicio->Length >= 3 ? ticket->inicio->Substring(0, 3)->ToUpper() : ticket->inicio->ToUpper();
-				String^ codeDestino = ticket->destino->Length >= 3 ? ticket->destino->Substring(0, 3)->ToUpper() : ticket->destino->ToUpper();
+				int y = 20;
 
 				Label^ codes = gcnew Label();
-				codes->Text = codeInicio + "        " + codeDestino;
 				codes->Font = gcnew Drawing::Font("Segoe UI", 22, FontStyle::Bold);
-				codes->Location = Drawing::Point(20, 120);
+				codes->Location = Drawing::Point(20, y);
 				codes->AutoSize = true;
+				y += codes->Height + 20;
 
-				// Fecha y reservacion
+				// Fecha y reservación
 				Label^ date = gcnew Label();
-				date->Text = "Fecha: " + ticket->fechaAbordaje + "    Codigo de reservacion: " + ticket->reservacion;
+				date->Text = "Fecha: " + ticket->fechaAbordaje + "    Código de reservación: " + ticket->reservacion;
 				date->Font = gcnew Drawing::Font("Segoe UI", 10, FontStyle::Regular);
-				date->Location = Drawing::Point(20, 170);
+				date->Location = Drawing::Point(20, y);
 				date->AutoSize = true;
+				y += date->Height + 10;
 
-				// Numero de ticket
+				// Número de boleto
 				Label^ ticketNum = gcnew Label();
-				ticketNum->Text = "No. de boleto: " + ticket->bookingNumber;
+				ticketNum->Text = "N.º de boleto: " + ticket->bookingNumber;
 				ticketNum->Font = gcnew Drawing::Font("Segoe UI", 10, FontStyle::Regular);
-				ticketNum->Location = Drawing::Point(20, 190);
+				ticketNum->Location = Drawing::Point(20, y);
 				ticketNum->AutoSize = true;
+				y += ticketNum->Height + 10;
 
-				// Detalles de vuelo (en una sola linea)
+				// Detalles de vuelo (en una sola línea)
 				Label^ details = gcnew Label();
 				details->Text = "Hora de abordaje: " + ticket->horaAbordaje +
-					"    Salida: " + ticket->fechaAbordaje +
-					"    Llegada: " + ticket->horaLlegada +
-					"    Vuelo: " + ticket->vuelo +
-					"    Asiento: " + ticket->asiento +
-					"    Operado por: " + ticket->operador;
+					"    Hora de llegada: " + ticket->horaLlegada +
+					"    Salida: " + ticket->inicio +
+					"    Llegada: " + ticket->destino +
+					"    N.º de vuelo: " + ticket->vuelo +
+					"    Bukin: "+ ticket->bookingNumber +
+					"    Nombre del pasajero: " + ticket->clienteName +
+					"    Asiento: " + ticket->asiento;
 				details->Font = gcnew Drawing::Font("Segoe UI", 10, FontStyle::Regular);
-				details->Location = Drawing::Point(20, 220);
+				details->Location = Drawing::Point(20, y);
 				details->AutoSize = true;
+				y += details->Height + 10;
 
 				// Nota
 				Label^ note = gcnew Label();
-				note->Text = "Presentese en el aeropuerto 2 horas antes de la salida de su vuelo. Hora de abordaje 45 minutos antes de la salida del vuelo.\nLa puerta cierra 15 minutos antes de la salida.";
+				note->Text = "Preséntese en el aeropuerto 2 horas antes de la salida de su vuelo. La hora de abordaje es 45 minutos antes de la salida del vuelo.\nLa puerta cierra 15 minutos antes de la salida.";
 				note->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
-				note->Location = Drawing::Point(20, 270);
-				note->Size = Drawing::Size(700, 40);
+				note->Location = Drawing::Point(20, y);
+				note->MaximumSize = Drawing::Size(700, 0);
+				note->AutoSize = true;
+				y += note->Height + 20;
 
-				mainPanel->Controls->Add(title);
-				mainPanel->Controls->Add(name);
-				mainPanel->Controls->Add(route);
 				mainPanel->Controls->Add(codes);
 				mainPanel->Controls->Add(date);
 				mainPanel->Controls->Add(ticketNum);
@@ -268,11 +239,14 @@ namespace AeropuertosCarmorlinga {
 				mainPanel->Controls->Add(note);
 
 				boardingPassForm->Controls->Add(mainPanel);
+
+				// Ajusta el tamaño del formulario al contenido
+				boardingPassForm->ClientSize = Drawing::Size(750, y);
+
 				boardingPassForm->ShowDialog();
 			}
 		}
 	}
-
 
 
 
@@ -284,12 +258,11 @@ namespace AeropuertosCarmorlinga {
 
 		for each (Ticket ^ ticket in tickets) {
 			System::Windows::Forms::Panel^ vueloPanel = gcnew System::Windows::Forms::Panel();
-			vueloPanel->Width = 1500; // Aumenta el ancho
-			vueloPanel->Height = 160; // Aumenta la altura
+			vueloPanel->Width = 1500;
+			vueloPanel->Height = 160;
 			vueloPanel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			vueloPanel->Margin = System::Windows::Forms::Padding(10);
 
-			// Ejemplo de distribución en columnas
 			int col1 = 10, col2 = 300, col3 = 600, col4 = 900, col5 = 1200;
 			int row1 = 10, row2 = 40, row3 = 70, row4 = 100;
 
@@ -334,7 +307,7 @@ namespace AeropuertosCarmorlinga {
 			reservacionLabel->AutoSize = true;
 
 			System::Windows::Forms::Label^ bookingNumberLabel = gcnew System::Windows::Forms::Label();
-			bookingNumberLabel->Text = "No. Ticket: " + ticket->bookingNumber;
+			bookingNumberLabel->Text = "bookingNumber: " + ticket->bookingNumber;
 			bookingNumberLabel->Location = System::Drawing::Point(col4, row2);
 			bookingNumberLabel->AutoSize = true;
 
@@ -348,13 +321,6 @@ namespace AeropuertosCarmorlinga {
 			operadorLabel->Location = System::Drawing::Point(col5, row3);
 			operadorLabel->AutoSize = true;
 
-			System::Windows::Forms::Button^ pasajerosButton = gcnew System::Windows::Forms::Button();
-			pasajerosButton->Text = "Ver pasajeros";
-			pasajerosButton->Location = System::Drawing::Point(col4, row4);
-			pasajerosButton->Width = 120;
-			pasajerosButton->Height = 30;
-			pasajerosButton->Tag = ticket;
-
 			System::Windows::Forms::Button^ imprimirButton = gcnew System::Windows::Forms::Button();
 			imprimirButton->Text = "Imprimir boleto";
 			imprimirButton->Location = System::Drawing::Point(col3, row4);
@@ -363,20 +329,13 @@ namespace AeropuertosCarmorlinga {
 			imprimirButton->Tag = ticket;
 			imprimirButton->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnImprimirBoletoClick);
 
-
 			System::Windows::Forms::Button^ cancelarButton = gcnew System::Windows::Forms::Button();
 			cancelarButton->Text = "Cancelar vuelo";
-			cancelarButton->Location = System::Drawing::Point(col5, row4);
+			cancelarButton->Location = System::Drawing::Point(col3 + 140, row4); // Al lado de imprimir
 			cancelarButton->Width = 120;
 			cancelarButton->Height = 30;
 			cancelarButton->Tag = ticket;
 			cancelarButton->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnCancelarVueloClick);
-
-			vueloPanel->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
-			for each (System::Windows::Forms::Control ^ ctrl in gcnew cli::array<System::Windows::Forms::Control^> { inicioLabel, destinoLabel, vueloLabel, fechaLabel, horaAbordajeLabel, horaLlegadaLabel, reservacionLabel, bookingNumberLabel, asientoLabel, operadorLabel, nombreClienteLabel, pasajerosButton, cancelarButton }) {
-				ctrl->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVueloPanelClick);
-			}
-			pasajerosButton->Click += gcnew System::EventHandler(this, &ListaDeVuelos::OnVerPasajerosClick);
 
 			vueloPanel->Controls->Add(inicioLabel);
 			vueloPanel->Controls->Add(destinoLabel);
@@ -389,15 +348,12 @@ namespace AeropuertosCarmorlinga {
 			vueloPanel->Controls->Add(asientoLabel);
 			vueloPanel->Controls->Add(operadorLabel);
 			vueloPanel->Controls->Add(nombreClienteLabel);
-			vueloPanel->Controls->Add(pasajerosButton);
-			vueloPanel->Controls->Add(cancelarButton);
 			vueloPanel->Controls->Add(imprimirButton);
+			vueloPanel->Controls->Add(cancelarButton);
 
 			this->flowLayoutVuelos->Controls->Add(vueloPanel);
 		}
 	}
-
-
 
 	private: System::Void OnVueloPanelClick(System::Object^ sender, System::EventArgs^ e) {
 		Control^ ctrl = dynamic_cast<Control^>(sender);
